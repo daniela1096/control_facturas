@@ -20,3 +20,19 @@ Route::get('/clientes', 'ClienteController@index');
 Route::resource('/control_clientes', 'ControlClienteController');
 
 Route::get('/control_clientes/{id}/confirmDelete', 'ControlClienteController@confirmDelete');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
