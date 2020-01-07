@@ -7,115 +7,133 @@ use Illuminate\Http\Request;
 
 class ControlClienteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('ControlCliente', [
-          'Clientes'=>ClienteModel::all()
-        ]);
-    }
+  /**
+  * Display a listing of the resource.
+  *
+  * @return \Illuminate\Http\Response
+  */
+  public function index()
+  {
+    return view('ControlCliente', [
+      'Clientes'=>ClienteModel::all()
+    ]);
+  }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-      return view('CrearCliente');
-    }
+  /**
+  * Show the form for creating a new resource.
+  *
+  * @return \Illuminate\Http\Response
+  */
+  public function create()
+  {
+    return view('CrearCliente');
+  }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $cliente = new ClienteModel();
-        $cliente->nombre_completo = $request->get('nombre_completo');
-        $cliente->nit = $request->get('nit');
-        $cliente->telefono = $request->get('telefono');
-        $cliente->ciudad = $request->get('ciudad');
-        $cliente->email = $request->get('email');
-        $cliente->save();
+  /**
+  * Store a newly created resource in storage.
+  *
+  * @param  \Illuminate\Http\Request  $request
+  * @return \Illuminate\Http\Response
+  */
+  public function store(Request $request)
+  {
 
-        return redirect('/control_clientes');
-    }
+    $validatedData = $request->validate([
+      'nombre_completo' => 'required|max:255',
+      'nit' => 'required|max:12',
+      'telefono' => 'required|max:10',
+      'ciudad' => 'required|max:255',
+      'email' => 'required|regex:/^.+@.+$/i'
+    ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    $cliente = new ClienteModel();
+    $cliente->nombre_completo = $request->get('nombre_completo');
+    $cliente->nit = $request->get('nit');
+    $cliente->telefono = $request->get('telefono');
+    $cliente->ciudad = $request->get('ciudad');
+    $cliente->email = $request->get('email');
+    $cliente->save();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $cliente = ClienteModel::findOrFail($id);
-        return view('EditarCliente',[
-          'cliente'=> $cliente
-        ]);
-    }
+    return redirect('/control_clientes');
+  }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //dd('put update');
-        $cliente = ClienteModel::find($id);
-        $cliente->nombre_completo = $request->get('nombre_completo');
-        $cliente->nit = $request->get('nit');
-        $cliente->telefono = $request->get('telefono');
-        $cliente->ciudad = $request->get('ciudad');
-        $cliente->email = $request->get('email');
-        $cliente->save();
+  /**
+  * Display the specified resource.
+  *
+  * @param  int  $id
+  * @return \Illuminate\Http\Response
+  */
+  public function show($id)
+  {
+    //
+  }
 
-        return redirect('/control_clientes');
-    }
+  /**
+  * Show the form for editing the specified resource.
+  *
+  * @param  int  $id
+  * @return \Illuminate\Http\Response
+  */
+  public function edit($id)
+  {
+    $cliente = ClienteModel::findOrFail($id);
+    return view('EditarCliente',[
+      'cliente'=> $cliente
+    ]);
+  }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-      $cliente = ClienteModel::findOrFail($id);
-      $cliente->delete();
+  /**
+  * Update the specified resource in storage.
+  *
+  * @param  \Illuminate\Http\Request  $request
+  * @param  int  $id
+  * @return \Illuminate\Http\Response
+  */
+  public function update(Request $request, $id)
+  {
+    //dd('put update');
 
-      return redirect('/control_clientes');
+    $validatedData = $request->validate([
+      'nombre_completo' => 'required|max:255',
+      'nit' => 'required|max:12',
+      'telefono' => 'required|max:10',
+      'ciudad' => 'required|max:255',
+      'email' => 'required|regex:/^.+@.+$/i'
+    ]);
+    
+    $cliente = ClienteModel::find($id);
+    $cliente->nombre_completo = $request->get('nombre_completo');
+    $cliente->nit = $request->get('nit');
+    $cliente->telefono = $request->get('telefono');
+    $cliente->ciudad = $request->get('ciudad');
+    $cliente->email = $request->get('email');
+    $cliente->save();
 
-    }
+    return redirect('/control_clientes');
+  }
+
+  /**
+  * Remove the specified resource from storage.
+  *
+  * @param  int  $id
+  * @return \Illuminate\Http\Response
+  */
+  public function destroy($id)
+  {
+    $cliente = ClienteModel::findOrFail($id);
+    $cliente->delete();
+
+    return redirect('/control_clientes');
+
+  }
 
 
-    public function confirmDelete($id)
-    {
-        //dd('confirmDelete' . $id);
-        $cliente = ClienteModel::find($id);
-        return view('confirmDelete' , [
-          'cliente'=>$cliente
-        ]);
-    }
+  public function confirmDelete($id)
+  {
+    //dd('confirmDelete' . $id);
+    $cliente = ClienteModel::find($id);
+    return view('confirmDelete' , [
+      'cliente'=>$cliente
+    ]);
+  }
 }
