@@ -26,7 +26,7 @@ class ControlClienteController extends Controller
      */
     public function create()
     {
-        //
+      return view('CrearCliente');
     }
 
     /**
@@ -37,7 +37,15 @@ class ControlClienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cliente = new ClienteModel();
+        $cliente->nombre_completo = $request->get('nombre_completo');
+        $cliente->nit = $request->get('nit');
+        $cliente->telefono = $request->get('telefono');
+        $cliente->ciudad = $request->get('ciudad');
+        $cliente->email = $request->get('email');
+        $cliente->save();
+
+        return redirect('/control_clientes');
     }
 
     /**
@@ -59,7 +67,10 @@ class ControlClienteController extends Controller
      */
     public function edit($id)
     {
-        //
+        $cliente = ClienteModel::findOrFail($id);
+        return view('EditarCliente',[
+          'cliente'=> $cliente
+        ]);
     }
 
     /**
@@ -71,7 +82,16 @@ class ControlClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //dd('put update');
+        $cliente = ClienteModel::find($id);
+        $cliente->nombre_completo = $request->get('nombre_completo');
+        $cliente->nit = $request->get('nit');
+        $cliente->telefono = $request->get('telefono');
+        $cliente->ciudad = $request->get('ciudad');
+        $cliente->email = $request->get('email');
+        $cliente->save();
+
+        return redirect('/control_clientes');
     }
 
     /**
@@ -82,6 +102,20 @@ class ControlClienteController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $cliente = ClienteModel::findOrFail($id);
+      $cliente->delete();
+
+      return redirect('/control_clientes');
+
+    }
+
+
+    public function confirmDelete($id)
+    {
+        //dd('confirmDelete' . $id);
+        $cliente = ClienteModel::find($id);
+        return view('confirmDelete' , [
+          'cliente'=>$cliente
+        ]);
     }
 }

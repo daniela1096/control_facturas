@@ -18,3 +18,5 @@ Route::get('/', function () {
 Route::get('/clientes', 'ClienteController@index');
 
 Route::resource('/control_clientes', 'ControlClienteController');
+
+Route::get('/control_clientes/{id}/confirmDelete', 'ControlClienteController@confirmDelete');
