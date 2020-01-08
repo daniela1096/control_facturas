@@ -17,9 +17,11 @@ Route::get('/', function () {
 
 Route::get('/clientes', 'ClienteController@index');
 
-Route::resource('/control_clientes', 'ControlClienteController');
+Route::resource('/control_clientes', 'ControlClienteController')->middleware('auth');;
+Route::resource('/control_facturas', 'ControlFacturaController')->middleware('auth');;
 
 Route::get('/control_clientes/{id}/confirmDelete', 'ControlClienteController@confirmDelete');
+Route::get('/control_facturas/{id}/confirmDelete', 'ControlFacturaController@confirmDelete');
 
 Auth::routes();
 

@@ -33,6 +33,8 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                      <li><a href="/control_clientes">Clientes</a></li>
+                      <li><a href="/control_facturas">Facturas</a></li>
 
                     </ul>
 

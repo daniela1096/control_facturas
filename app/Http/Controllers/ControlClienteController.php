@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 
 class ControlClienteController extends Controller
 {
+
+
   /**
   * Display a listing of the resource.
   *
@@ -100,7 +102,7 @@ class ControlClienteController extends Controller
       'ciudad' => 'required|max:255',
       'email' => 'required|regex:/^.+@.+$/i'
     ]);
-    
+
     $cliente = ClienteModel::find($id);
     $cliente->nombre_completo = $request->get('nombre_completo');
     $cliente->nit = $request->get('nit');
