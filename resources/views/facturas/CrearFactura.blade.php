@@ -39,12 +39,40 @@
           <input type="text" name="fecha_recibo" id="fecha_recibo" class="form-control" value="{{ old('fecha_recibo') }}">
         </div>
         <div class="form-group">
+          <label for="cliente">Cliente</label>
+          <select class="form-control custom-select {{ $errors->has('cliente') ? 'is-invalid' : '' }}" name="cliente" id="cliente" required>
+                <option value="">{{ __('Por favor seleccione un cliente') }}</option>
+                @foreach($clientes as $cliente)
+                    <option value="{{ $cliente->id }}">{{ $cliente->nombre_completo }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="form-group">
+          <label for="vendedor">Vendedor</label>
+          <select class="form-control custom-select {{ $errors->has('vendedor') ? 'is-invalid' : '' }}" name="vendedor" id="vendedor" required>
+                <option value="">{{ __('Por favor seleccione un vendedor') }}</option>
+                @foreach($vendedores as $vendedor)
+                    <option value="{{ $vendedor->id }}">{{ $vendedor->nombre_vendedor }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="form-group">
           <label for="iva">Iva</label>
           <input type="text" name="iva" id="iva" class="form-control" value="{{ old('iva') }}">
         </div>
         <div class="form-group">
           <label for="estado">Estado</label>
-          <input type="text" name="estado" id="estado" class="form-control" value="{{ old('estado') }}">
+          <!--<input type="text" name="estado" id="estado" class="form-control" value="{{ old('estado') }}">-->
+          <select class="form-control custom-select {{ $errors->has('estado') ? 'is-invalid' : '' }}" name="estado" id="estado" required>
+                  <option value="">{{ __('Por favor seleccione un estado') }}</option>
+                  <option value="Procesada">Procesada</option>
+                  <option value="En_proceso">En Proceso</option>
+                  <option value="Finalizada">Finalizada</option>
+                  <option value="Rechazada">Rechazada</option>
+                  <option value="Anludada">Anulada</option>
+            </select>
         </div>
         <button type="sumbit" class="btn btn-primary">Guardar</button>
       </form>

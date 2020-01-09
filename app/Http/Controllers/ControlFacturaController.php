@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\FacturaModel;
+use App\ClienteModel;
+use App\VendedorModel;
 
 class ControlFacturaController extends Controller
 {
@@ -26,7 +28,12 @@ class ControlFacturaController extends Controller
      */
     public function create()
     {
-        return view('facturas.CrearFactura');
+        $clientes = ClienteModel::all();
+        $vendedores = VendedorModel::all();
+        return view('facturas.CrearFactura', [
+          'clientes' => $clientes,
+          'vendedores' => $vendedores
+        ]);
     }
 
     /**
@@ -49,6 +56,8 @@ class ControlFacturaController extends Controller
       $factura->fecha_exp = $request->get('fecha_exp');
       $factura->fecha_ven = $request->get('fecha_ven');
       $factura->fecha_recibo = $request->get('fecha_recibo');
+      $factura->cliente_id = $request->input('cliente_id');
+      $factura->vendedor_id = $request->input('vendedor_id');
       $factura->iva = $request->get('iva');
       $factura->estado = $request->get('estado');
       $factura->save();
